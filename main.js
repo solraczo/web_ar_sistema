@@ -19,18 +19,25 @@ scene.add(light);
 const ambientLight = new THREE.AmbientLight(0xffffff, 1);
 scene.add(ambientLight);
 
-// Cargar el modelo GLTF
+// Cargar el modelo GLTF con texturas
 const gltfLoader = new GLTFLoader();
 gltfLoader.load(
-    'models/sistema10.gltf', // Ruta a tu modelo GLTF
+    'models/sistema10.gltf', // Ruta al archivo GLTF
     (gltf) => {
         const model = gltf.scene;
-        model.scale.set(0.5, 0.5, 0.5);
-        model.position.set(0, 0, 0);
+        model.scale.set(0.5, 0.5, 0.5); // Ajusta la escala del modelo
+        model.position.set(0, 0, 0);    // Ajusta la posición del modelo
         scene.add(model);
+
+        console.log('Modelo GLTF cargado correctamente.');
     },
-    undefined,
-    (error) => console.error('Error al cargar el modelo GLTF:', error)
+    (xhr) => {
+        // Muestra el progreso de la carga
+        console.log((xhr.loaded / xhr.total) * 100 + '% cargado');
+    },
+    (error) => {
+        console.error('Error al cargar el modelo GLTF:', error);
+    }
 );
 
 // Renderizado en bucle
